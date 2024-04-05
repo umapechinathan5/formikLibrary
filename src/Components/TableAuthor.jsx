@@ -3,7 +3,7 @@ import Trauthor from './Trauthor';
 
 const TableAuthor = ({ authors, handleauthoredit, handleauthordelete, handleedit }) => {
   return (
-    <div>
+    <div style={{position:'relative',left:"300px",width:"80%"}}>
       <table className="table">
         <thead className="thead-dark">
           <tr>

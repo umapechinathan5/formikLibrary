@@ -1,3 +1,4 @@
+import "./App.css"
 import React, { useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import BookRecord from "./Components/BookRecord";
@@ -22,13 +23,13 @@ function App() {
     setAuthors([...authors, formData]);
   };
 
-  const handleBookEdit = (id, formData) => {
-    setBooks(books.map(book => (book.id === id ? { ...book, ...formData } : book)));
+  const handleBookEdit = (editedBook) => {
+    setBooks(books.map(book => (book.id === editedBook.id ? editedBook : book)));
     setEditedBook(null);
   };
 
-  const handleAuthorEdit = (id, formData) => {
-    setAuthors(authors.map(author => (author.id === id ? { ...author, ...formData } : author)));
+  const handleAuthorEdit = (editedAuthor) => {
+    setAuthors(authors.map(author => (author.id === editedAuthor.id ? editedAuthor : author)));
     setEditedAuthor(null);
   };
 

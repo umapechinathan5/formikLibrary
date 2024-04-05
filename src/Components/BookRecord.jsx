@@ -36,8 +36,9 @@ const BookRecord = ({ handlebooksubmit, editedBook }) => {
   });
 
   return (
+    <div style={{position:'relative',left:"300px"}}>
     <div className='container'>
-      <div className='row'>
+      <div className='col-md-6'>
         <h1>Book Record</h1>
         <div className='col-lg-12'>
           <form onSubmit={formik.handleSubmit}>
@@ -94,6 +95,7 @@ const BookRecord = ({ handlebooksubmit, editedBook }) => {
           </form>
         </div>
       </div>
+    </div>
     </div>
   )
 }

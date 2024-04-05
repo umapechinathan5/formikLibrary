@@ -3,7 +3,7 @@ import Trbook from './Trbook';
 
 const TableBook = ({ books, handlebookedit, handlebookdelete, handleedit }) => {
   return (
-    <div>
+    <div style={{position:'relative',left:"300px",width:"70%"}}>
       <table className="table">
         <thead className="thead-dark">
           <tr>
