@@ -1,26 +1,23 @@
 import React, { useState } from 'react';
+import { useFormik } from 'formik';
 
 const Trauthor = ({ index, author, handleauthoredit, handleauthordelete }) => {
   const [editMode, setEditMode] = useState(false);
-  const [editedAuthor, setEditedAuthor] = useState(author);
 
-  const handleEdit = () => {
-    setEditMode(true);
-  };
+  const formik = useFormik({
+    initialValues: {
+      authorName: author.authorName,
+      birthDate: author.birthDate,
+      biography: author.biography,
+    },
+    onSubmit: (values) => {
+      handleauthoredit({ ...author, ...values });
+      setEditMode(false);
+    },
+  });
 
-  const handleCancelEdit = () => {
-    setEditedAuthor(author);
-    setEditMode(false);
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setEditedAuthor({ ...editedAuthor, [name]: value });
-  };
-
-  const handleSave = () => {
-    handleauthoredit(editedAuthor);
-    setEditMode(false);
+  const handleDelete = () => {
+    handleauthordelete(author.id);
   };
 
   return (
@@ -28,9 +25,30 @@ const Trauthor = ({ index, author, handleauthoredit, handleauthordelete }) => {
       <td>{index + 1}</td>
       {editMode ? (
         <>
-          <td><input type="text" name="authorName" value={editedAuthor.authorName} onChange={handleChange} /></td>
-          <td><input type="text" name="birthDate" value={editedAuthor.birthDate} onChange={handleChange} /></td>
-          <td><input type="text" name="biography" value={editedAuthor.biography} onChange={handleChange} /></td>
+          <td>
+            <input
+              type="text"
+              name="authorName"
+              value={formik.values.authorName}
+              onChange={formik.handleChange}
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="birthDate"
+              value={formik.values.birthDate}
+              onChange={formik.handleChange}
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="biography"
+              value={formik.values.biography}
+              onChange={formik.handleChange}
+            />
+          </td>
         </>
       ) : (
         <>
@@ -42,13 +60,13 @@ const Trauthor = ({ index, author, handleauthoredit, handleauthordelete }) => {
       <td>
         {editMode ? (
           <>
-            <button onClick={handleSave}>Save</button>
-            <button onClick={handleCancelEdit}>Cancel</button>
+            <button type="submit" onClick={formik.handleSubmit}>Save</button>
+            <button type="button" onClick={() => setEditMode(false)}>Cancel</button>
           </>
         ) : (
           <>
-            <button onClick={handleEdit}>Edit</button>
-            <button onClick={handleauthordelete}>Delete</button>
+            <button className="btn btn-warning" onClick={() => setEditMode(true)}>Edit</button>
+            <button className="btn btn-danger ml-5" onClick={handleDelete}>Delete</button>
           </>
         )}
       </td>

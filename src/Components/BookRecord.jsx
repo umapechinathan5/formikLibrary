@@ -1,7 +1,7 @@
 import React from 'react';
 import { useFormik } from 'formik';
 
-const BookRecord = ({ handlebooksubmit, editedBook }) => {
+const BookRecord = ({ handlebooksubmit, editedBook,generateID }) => {
   const formik = useFormik({
     initialValues: {
       title: editedBook ? editedBook.title : "",
@@ -30,16 +30,18 @@ const BookRecord = ({ handlebooksubmit, editedBook }) => {
 
       return errors;
     },
-    onSubmit: (values) => {
-      handlebooksubmit(values);
+    onSubmit: (values,{resetForm}) => {
+      const newBook = { ...values, id: generateID() }; // Generating new ID
+      handlebooksubmit(newBook);
+      resetForm();
     },
   });
 
   return (
     <div style={{position:'relative',left:"300px"}}>
-    <div className='container'>
+    <div className='container text-warning'>
       <div className='col-md-6'>
-        <h1>Book Record</h1>
+        <h1 className=''>Book Record</h1>
         <div className='col-lg-12'>
           <form onSubmit={formik.handleSubmit}>
           <div className="form-group">

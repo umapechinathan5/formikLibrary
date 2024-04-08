@@ -1,37 +1,59 @@
 import React, { useState } from 'react';
+import { useFormik } from 'formik';
 
 const Trbook = ({ index, book, handlebookedit, handlebookdelete }) => {
   const [editMode, setEditMode] = useState(false);
-  const [editedBook, setEditedBook] = useState(book);
 
-  const handleEdit = () => {
-    setEditMode(true);
-  };
-
-  const handleCancelEdit = () => {
-    setEditedBook(book);
-    setEditMode(false);
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setEditedBook({ ...editedBook, [name]: value });
-  };
-
-  const handleSave = () => {
-    handlebookedit(editedBook);
-    setEditMode(false);
-  };
+  const formik = useFormik({
+    initialValues: {
+      title: book.title,
+      author: book.author,
+      isbnNumber: book.isbnNumber,
+      publication: book.publication,
+    },
+    onSubmit: (values) => {
+      handlebookedit({ ...book, ...values });
+      setEditMode(false);
+    },
+  });
 
   return (
     <tr>
       <td>{index + 1}</td>
       {editMode ? (
         <>
-          <td><input type="text" name="title" value={editedBook.title} onChange={handleChange} /></td>
-          <td><input type="text" name="author" value={editedBook.author} onChange={handleChange} /></td>
-          <td><input type="text" name="isbnNumber" value={editedBook.isbnNumber} onChange={handleChange} /></td>
-          <td><input type="date" name="publication" value={editedBook.publication} onChange={handleChange} /></td>
+          <td>
+            <input
+              type="text"
+              name="title"
+              value={formik.values.title}
+              onChange={formik.handleChange}
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="author"
+              value={formik.values.author}
+              onChange={formik.handleChange}
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="isbnNumber"
+              value={formik.values.isbnNumber}
+              onChange={formik.handleChange}
+            />
+          </td>
+          <td>
+            <input
+              type="date"
+              name="publication"
+              value={formik.values.publication}
+              onChange={formik.handleChange}
+            />
+          </td>
         </>
       ) : (
         <>
@@ -44,13 +66,13 @@ const Trbook = ({ index, book, handlebookedit, handlebookdelete }) => {
       <td>
         {editMode ? (
           <>
-            <button onClick={handleSave}>Save</button>
-            <button onClick={handleCancelEdit}>Cancel</button>
+            <button type="submit" onClick={formik.handleSubmit}>Save</button>
+            <button type="button" onClick={() => setEditMode(false)}>Cancel</button>
           </>
         ) : (
           <>
-            <button onClick={handleEdit}>Edit</button>
-            <button onClick={handlebookdelete}>Delete</button>
+            <button className="btn btn-warning" onClick={() => setEditMode(true)}>Edit</button>
+            <button className="btn btn-danger ml-5" onClick={() => handlebookdelete(book.id)}>Delete</button>
           </>
         )}
       </td>

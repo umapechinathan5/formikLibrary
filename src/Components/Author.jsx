@@ -1,7 +1,7 @@
 import React from 'react';
 import { useFormik } from 'formik';
 
-const Author = ({ handleauthorsubmit, editedAuthor }) => {
+const Author = ({ handleauthorsubmit, editedAuthor,generateID }) => {
   const formik = useFormik({
     initialValues: {
       authorName: editedAuthor ? editedAuthor.authorName : "",
@@ -25,16 +25,18 @@ const Author = ({ handleauthorsubmit, editedAuthor }) => {
 
       return errors;
     },
-    onSubmit: (values) => {
-      handleauthorsubmit(values);
+    onSubmit: (values,{resetForm}) => {
+      const newAuthor = { ...values, id: generateID() };
+      handleauthorsubmit(newAuthor);
+      resetForm();
     },
   });
 
   return (
     <div style={{position:'relative',left:"300px"}}>
-    <div className='container'>
+    <div className='container text-warning'>
       <div className='col-md-6'>
-        <h1>Author Record</h1>
+        <h1 className=''>Author Record</h1>
         <div className='col-lg-12'>
           <form onSubmit={formik.handleSubmit}>
           <div className="form-group">

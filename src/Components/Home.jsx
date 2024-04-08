@@ -1,8 +1,11 @@
 import React from 'react'
+import image from '../assets/library.avif';
+
 
 const Home = () => {
+  
   return (
-    <div>Home</div>
+    <div className='home' >Home</div>
   )
 }
 

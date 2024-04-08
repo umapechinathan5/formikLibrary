@@ -1,6 +1,6 @@
-/* body{
-  background-image: url("./assets/bacgr.avif");
-  background-repeat: no-repeat;
+.app-wrapper {
+  min-height: 100vh;
+  background-image: url('./assets/library.avif');
   background-size: cover;
-  background-position: center center;
-} */
+  background-position: center;
+}
